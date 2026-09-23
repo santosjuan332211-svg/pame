@@ -2,222 +2,407 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flores Amarillas para Pame</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Flores Amarillas para Pame 💛</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Great Vibes & Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: '#f59e0b',
+                        warmYellow: '#fef08a',
+                        softGold: '#fbbf24',
+                        deepGold: '#b45309',
+                        romanticPink: '#fce7f3'
+                    },
+                    fontFamily: {
+                        cursive: ['"Great Vibes"', 'cursive'],
+                        sans: ['Montserrat', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            background-color: #1a001a;
-            color: #ffffff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 20px;
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 40%, #fef08a 100%);
             overflow-x: hidden;
+            touch-action: manipulation;
         }
 
-        .container {
-            max-width: 500px;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 30px 20px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 215, 0, 0.2);
+        .font-cursive {
+            font-family: 'Great Vibes', cursive;
         }
 
-        h1 {
-            color: #ffd700;
-            font-size: 2.2rem;
-            margin-bottom: 10px;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        /* Floating Animation */
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(3deg); }
         }
 
-        p.subtitle {
-            font-size: 1.1rem;
-            color: #ffe680;
-            margin-bottom: 20px;
+        .animate-float {
+            animation: floatSlow 5s ease-in-out infinite;
         }
 
-        /* Reproductor de audio personalizado */
-        .audio-player {
-            margin-bottom: 20px;
+        /* Pulse Soft */
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 15px rgba(245, 158, 11, 0.4); }
+            50% { box-shadow: 0 0 30px rgba(245, 158, 11, 0.8); }
         }
 
-        audio {
-            width: 100%;
-            max-width: 300px;
-            height: 40px;
-            border-radius: 20px;
-            outline: none;
+        .glow-effect {
+            animation: pulseGlow 3s infinite;
         }
 
-        .photo-frame {
-            width: 180px;
-            height: 180px;
-            margin: 0 auto 25px;
-            border-radius: 50%;
-            border: 4px solid #ffd700;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #2a002a;
+        /* Flower Stem Growth Animation */
+        @keyframes stemGrow {
+            from { height: 0; opacity: 0; }
+            to { height: 180px; opacity: 1; }
         }
 
-        .photo-frame img {
+        /* Falling Petals Canvas Container */
+        #petals-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            pointer-events: none;
+            z-index: 20;
         }
 
-        .flower-container {
-            position: relative;
-            width: 200px;
-            height: 220px;
-            margin: 0 auto;
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
         }
-
-        .flower {
-            position: absolute;
-            transform-origin: bottom center;
-            animation: sway 3s ease-in-out infinite alternate;
-        }
-
-        .flower-1 { left: 30px; bottom: 10px; animation-delay: 0s; }
-        .flower-2 { left: 80px; bottom: 20px; animation-delay: 0.5s; }
-        .flower-3 { left: 130px; bottom: 10px; animation-delay: 1s; }
-
-        .stem {
-            width: 8px;
-            height: 120px;
-            background: #4caf50;
-            margin: 0 auto;
-            border-radius: 4px;
-        }
-
-        .center {
-            width: 35px;
-            height: 35px;
-            background: #8b4513;
-            border-radius: 50%;
-            margin: -15px auto 0;
-            position: relative;
-            z-index: 2;
-        }
-
-        .petals {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 80px;
-            z-index: 1;
-        }
-
-        .petal {
-            position: absolute;
-            width: 25px;
-            height: 45px;
-            background: #ffd700;
-            border-radius: 50%;
-            top: 20px;
-            left: 27px;
-            transform-origin: center bottom;
-            box-shadow: 0 0 5px rgba(255, 215, 0, 0.8);
-        }
-
-        .p1 { transform: rotate(0deg) translateY(-20px); }
-        .p2 { transform: rotate(45deg) translateY(-20px); }
-        .p3 { transform: rotate(90deg) translateY(-20px); }
-        .p4 { transform: rotate(135deg) translateY(-20px); }
-        .p5 { transform: rotate(180deg) translateY(-20px); }
-        .p6 { transform: rotate(225deg) translateY(-20px); }
-        .p7 { transform: rotate(270deg) translateY(-20px); }
-        .p8 { transform: rotate(315deg) translateY(-20px); }
-
-        @keyframes sway {
-            0% { transform: rotate(-5deg); }
-            100% { transform: rotate(5deg); }
-        }
-
-        .footer-message {
-            margin-top: 30px;
-            font-size: 1rem;
-            color: #d8b4fe;
-            line-height: 1.5;
+        ::-webkit-scrollbar-thumb {
+            background: #f59e0b;
+            border-radius: 10px;
         }
     </style>
 </head>
-<body>
+<body class="min-h-screen text-slate-800 flex flex-col justify-between items-center relative pb-10 selection:bg-amber-200">
 
-    <div class="container">
-        <h1>Te amo Pame</h1>
-        <p class="subtitle">Estas flores amarillas son para ti 💛</p>
+    <canvas id="petals-canvas"></canvas>
 
-        <!-- Reproductor de la canción Peaches -->
-        <div class="audio-player">
-            <audio controls autoplay loop>
-                <source src="https://ia801602.us.archive.org/11/items/jack-black-peaches/Jack%20Black%20-%20Peaches.mp3" type="audio/mpeg">
-                Tu navegador no soporta el reproductor de audio.
-            </audio>
-        </div>
-
-        <div class="photo-frame">
-            <img src="https://via.placeholder.com/200/ffd700/000000?text=Tu+Foto+Aquí" alt="Foto con Pame">
-        </div>
-
-        <div class="flower-container">
-            <div class="flower flower-1">
-                <div class="petals">
-                    <div class="petal p1"></div><div class="petal p2"></div>
-                    <div class="petal p3"></div><div class="petal p4"></div>
-                    <div class="petal p5"></div><div class="petal p6"></div>
-                    <div class="petal p7"></div><div class="petal p8"></div>
-                </div>
-                <div class="center"></div>
-                <div class="stem"></div>
-            </div>
-
-            <div class="flower flower-2">
-                <div class="petals">
-                    <div class="petal p1"></div><div class="petal p2"></div>
-                    <div class="petal p3"></div><div class="petal p4"></div>
-                    <div class="petal p5"></div><div class="petal p6"></div>
-                    <div class="petal p7"></div><div class="petal p8"></div>
-                </div>
-                <div class="center"></div>
-                <div class="stem"></div>
-            </div>
-
-            <div class="flower flower-3">
-                <div class="petals">
-                    <div class="petal p1"></div><div class="petal p2"></div>
-                    <div class="petal p3"></div><div class="petal p4"></div>
-                    <div class="petal p5"></div><div class="petal p6"></div>
-                    <div class="petal p7"></div><div class="petal p8"></div>
-                </div>
-                <div class="center"></div>
-                <div class="stem"></div>
-            </div>
-        </div>
-
-        <p class="footer-message">
-            Aunque estemos lejos, siempre busco la manera de sacarte una sonrisa. ¡Que tengas un día hermoso!
+    <!-- Top Floating Sparkles Header -->
+    <div class="w-full text-center pt-8 pb-4 px-4 z-10">
+        <span class="inline-block px-4 py-1.5 rounded-full bg-amber-100/80 border border-amber-300 text-amber-800 text-xs sm:text-sm font-semibold tracking-wide uppercase shadow-sm">
+            ✨ Un detalle especial para ti ✨
+        </span>
+        
+        <!-- MAIN HIGHLIGHTED NAME & MESSAGE -->
+        <h1 class="text-5xl sm:text-7xl font-cursive text-amber-600 drop-shadow-md mt-3 mb-1 tracking-wider animate-float">
+            ¡Te amo Pame!
+        </h1>
+        <p class="text-sm sm:text-base text-amber-800 font-medium italic">
+            "Flores amarillas que nunca se marchitan, como mi amor por ti."
         </p>
     </div>
 
+    <!-- MAIN INTERACTIVE CONTAINER -->
+    <main class="w-full max-w-md px-4 z-10 my-auto flex flex-col items-center">
+        
+        <!-- CARD CONTAINER -->
+        <div class="w-full bg-white/80 backdrop-blur-md rounded-3xl p-6 shadow-2xl border border-amber-200 flex flex-col items-center relative overflow-hidden transition-all duration-300">
+            
+            <!-- Floating Decorative Flower Badges -->
+            <div class="absolute -top-3 -left-3 text-3xl animate-bounce" style="animation-duration: 3s;">🌻</div>
+            <div class="absolute -top-3 -right-3 text-3xl animate-bounce" style="animation-duration: 3.5s;">🌼</div>
+
+            <!-- PHOTO FRAME SECTION -->
+            <div class="relative w-full mb-6 group">
+                <div class="w-full h-64 sm:h-72 rounded-2xl overflow-hidden border-4 border-amber-300 shadow-md relative bg-amber-50">
+                    <img id="pame-photo" 
+                         src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?q=80&w=800&auto=format&fit=crop" 
+                         alt="Pame y Flores" 
+                         class="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                         onerror="this.src='https://placehold.co/600x600/fef08a/b45309?text=Tu+Foto+Aqui'">
+                    
+                    <!-- Gradient Overlay -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+                    
+                    <div class="absolute bottom-3 left-3 right-3 text-white text-center">
+                        <p class="text-xs uppercase tracking-widest text-amber-200 font-semibold">Siempre juntos</p>
+                        <p class="text-lg font-bold drop-shadow">Especialmente para ti ❤️</p>
+                    </div>
+                </div>
+
+                <!-- Helper note for uploading user photo if needed -->
+                <div class="text-[10px] text-center text-amber-700/70 mt-1">
+                    💡 <span>(Puedes cambiar la foto editando la URL del código)</span>
+                </div>
+            </div>
+
+            <!-- INTERACTIVE DIGITAL FLOWER BOUQUET SVG -->
+            <div id="flower-container" class="relative w-48 h-48 my-2 cursor-pointer group flex items-center justify-center" onclick="triggerFlowerBloom()">
+                <svg viewBox="0 0 200 200" class="w-full h-full drop-shadow-xl transform transition-transform duration-500 group-hover:scale-110">
+                    <!-- Stem -->
+                    <path d="M100,120 Q95,160 100,200" stroke="#65a30d" stroke-width="8" fill="none" stroke-linecap="round" />
+                    <!-- Leaves -->
+                    <path d="M98,160 Q70,150 80,135 Q95,145 98,160 Z" fill="#4d7c0f" />
+                    <path d="M102,175 Q130,165 120,150 Q105,160 102,175 Z" fill="#4d7c0f" />
+                    
+                    <!-- Sun/Flower Glow -->
+                    <circle cx="100" cy="85" r="45" fill="#fef08a" opacity="0.6" class="animate-pulse" />
+                    
+                    <!-- Petals -->
+                    <g id="petals-group">
+                        <!-- 12 Petals around the center -->
+                        <ellipse cx="100" cy="40" rx="10" ry="25" fill="#f59e0b" />
+                        <ellipse cx="100" cy="130" rx="10" ry="25" fill="#f59e0b" />
+                        <ellipse cx="55" cy="85" rx="25" ry="10" fill="#f59e0b" />
+                        <ellipse cx="145" cy="85" rx="25" ry="10" fill="#f59e0b" />
+                        
+                        <ellipse cx="68" cy="53" rx="12" ry="22" fill="#fbbf24" transform="rotate(-45 68 53)" />
+                        <ellipse cx="132" cy="117" rx="12" ry="22" fill="#fbbf24" transform="rotate(-45 132 117)" />
+                        <ellipse cx="132" cy="53" rx="12" ry="22" fill="#fbbf24" transform="rotate(45 132 53)" />
+                        <ellipse cx="68" cy="117" rx="12" ry="22" fill="#fbbf24" transform="rotate(45 68 117)" />
+                    </g>
+                    
+                    <!-- Inner Rose/Sunflower Center -->
+                    <circle cx="100" cy="85" r="22" fill="#78350f" />
+                    <circle cx="100" cy="85" r="18" fill="#92400e" />
+                    <circle cx="96" cy="81" r="4" fill="#fef08a" opacity="0.7" />
+                </svg>
+                <div class="absolute bottom-0 text-[11px] font-bold text-amber-800 bg-amber-200/80 px-3 py-0.5 rounded-full shadow">
+                    ¡Tócame! 🌻
+                </div>
+            </div>
+
+            <!-- ACTION BUTTONS -->
+            <div class="w-full space-y-3 mt-4">
+                <button onclick="toggleMusic()" id="music-btn" class="w-full py-3 px-5 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-amber-950 font-bold rounded-2xl shadow-lg flex items-center justify-center space-x-2 transition-all transform active:scale-95">
+                    <i class="fa-solid fa-music text-lg" id="music-icon"></i>
+                    <span id="music-text">Reproducir Música Romántica 🎶</span>
+                </button>
+
+                <button onclick="openLetter()" class="w-full py-3 px-5 bg-amber-100 hover:bg-amber-200 text-amber-900 font-semibold rounded-2xl border border-amber-300 shadow-sm flex items-center justify-center space-x-2 transition-all transform active:scale-95">
+                    <i class="fa-solid fa-envelope-open-text text-lg text-amber-600"></i>
+                    <span>Abrir Carta para Pame 💌</span>
+                </button>
+
+                <button onclick="rainPetalsExplosion()" class="w-full py-2.5 px-4 bg-yellow-200/70 hover:bg-yellow-300/80 text-amber-900 text-xs font-bold rounded-xl flex items-center justify-center space-x-2 transition">
+                    <i class="fa-solid fa-wand-magic-sparkles text-amber-600"></i>
+                    <span>¡Lluvia Intensa de Flores! ✨</span>
+                </button>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- FOOTER MESSAGE -->
+    <footer class="mt-8 text-center text-xs text-amber-800/80 px-4">
+        Hecho con todo el amor del mundo para mi persona favorita. ❤️
+    </footer>
+
+    <!-- LOVE LETTER MODAL -->
+    <div id="letter-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 transition-opacity duration-300">
+        <div class="bg-amber-50 border-2 border-amber-300 rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl relative transform transition-all scale-95" id="letter-content">
+            
+            <button onclick="closeLetter()" class="absolute top-4 right-4 text-amber-800 hover:text-amber-950 text-xl w-8 h-8 rounded-full bg-amber-200/50 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="text-center mb-4">
+                <span class="text-3xl">🌻</span>
+                <h2 class="text-3xl font-cursive text-amber-700 font-bold mt-1">Para mi amada Pame</h2>
+            </div>
+
+            <div class="space-y-3 text-slate-700 text-sm sm:text-base leading-relaxed max-h-[60vh] overflow-y-auto pr-2">
+                <p>
+                    Mi Pame hermosa,
+                </p>
+                <p>
+                    Aunque la distancia nos separe hoy y estés allá lejos en Estados Unidos, quiero que sepas que no hay un solo día en que no estés en mi mente y en mi corazón.
+                </p>
+                <p>
+                    Dicen que las flores amarillas se regalan a las personas más especiales para iluminar su vida y demostrar un amor sincero e infinito. Hoy no puedo entregártelas en mano, pero te envío este jardín digital que nunca se va a marchitar.
+                </p>
+                <p class="font-semibold text-amber-800">
+                    Gracias por ser mi luz, mi alegría y mi lugar seguro. ¡Te amo con todo mi corazón!
+                </p>
+            </div>
+
+            <div class="mt-6 text-center">
+                <button onclick="closeLetter()" class="py-2.5 px-6 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-full shadow-md transition transform active:scale-95">
+                    Guardar en mi corazón ❤️
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- AUDIO PLAYER (Using royalty-free gentle romantic melody) -->
+    <audio id="bg-music" loop preload="auto">
+        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-piano-112181.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Canvas Flying Petals Animation
+        const canvas = document.getElementById('petals-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
+
+        const petals = [];
+        const petalColors = ['#f59e0b', '#fbbf24', '#fef08a', '#d97706'];
+
+        class Petal {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * width;
+                this.y = -20;
+                this.size = Math.random() * 8 + 6;
+                this.speedY = Math.random() * 1.5 + 1;
+                this.speedX = Math.random() * 1 - 0.5;
+                this.color = petalColors[Math.floor(Math.random() * petalColors.length)];
+                this.rotation = Math.random() * 360;
+                this.rotSpeed = (Math.random() - 0.5) * 2;
+                this.opacity = Math.random() * 0.7 + 0.3;
+            }
+
+            update() {
+                this.y += this.speedY;
+                this.x += Math.sin(this.y * 0.01) + this.speedX;
+                this.rotation += this.rotSpeed;
+
+                if (this.y > height + 20) {
+                    this.reset();
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate((this.rotation * Math.PI) / 180);
+                ctx.globalAlpha = this.opacity;
+                ctx.fillStyle = this.color;
+                
+                // Draw petal shape
+                ctx.beginPath();
+                ctx.ellipse(0, 0, this.size, this.size / 2, 0, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        // Initialize 35 petals
+        for (let i = 0; i < 35; i++) {
+            const p = new Petal();
+            p.y = Math.random() * height; // distribute initial height
+            petals.push(p);
+        }
+
+        function animatePetals() {
+            ctx.clearRect(0, 0, width, height);
+            petals.forEach(petal => {
+                petal.update();
+                petal.draw();
+            });
+            requestAnimationFrame(animatePetals);
+        }
+
+        animatePetals();
+
+        // Music Controls
+        const music = document.getElementById('bg-music');
+        const musicBtn = document.getElementById('music-btn');
+        const musicIcon = document.getElementById('music-icon');
+        const musicText = document.getElementById('music-text');
+        let isPlaying = false;
+
+        function toggleMusic() {
+            if (isPlaying) {
+                music.pause();
+                musicIcon.className = "fa-solid fa-music text-lg";
+                musicText.innerText = "Reproducir Música Romántica 🎶";
+                isPlaying = false;
+            } else {
+                music.play().then(() => {
+                    musicIcon.className = "fa-solid fa-pause text-lg";
+                    musicText.innerText = "Pausar Música 🎵";
+                    isPlaying = true;
+                }).catch(err => {
+                    console.log("Audio autoplay error: ", err);
+                });
+            }
+        }
+
+        // Modal Controls
+        function openLetter() {
+            const modal = document.getElementById('letter-modal');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.firstElementChild.classList.remove('scale-95');
+                modal.firstElementChild.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeLetter() {
+            const modal = document.getElementById('letter-modal');
+            modal.firstElementChild.classList.remove('scale-100');
+            modal.firstElementChild.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 200);
+        }
+
+        // Interactive Flower Click Trigger
+        function triggerFlowerBloom() {
+            const group = document.getElementById('petals-group');
+            group.style.transition = 'transform 0.4s ease';
+            group.style.transform = 'scale(1.2) rotate(15deg)';
+            
+            // Add temporary explosion of petals
+            for (let i = 0; i < 15; i++) {
+                const p = new Petal();
+                p.y = height / 2;
+                p.x = width / 2;
+                p.speedY = (Math.random() - 0.5) * 6;
+                p.speedX = (Math.random() - 0.5) * 6;
+                petals.push(p);
+            }
+
+            setTimeout(() => {
+                group.style.transform = 'scale(1) rotate(0deg)';
+            }, 400);
+        }
+
+        // Intense Rain Trigger
+        function rainPetalsExplosion() {
+            for (let i = 0; i < 40; i++) {
+                const p = new Petal();
+                p.reset();
+                petals.push(p);
+            }
+            // Trim array after 6 seconds to optimize memory
+            setTimeout(() => {
+                if (petals.length > 35) {
+                    petals.splice(35, petals.length - 35);
+                }
+            }, 6000);
+        }
+    </script>
 </body>
 </html>
